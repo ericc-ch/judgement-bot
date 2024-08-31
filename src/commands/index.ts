@@ -1,5 +1,5 @@
 import {
-  CacheType,
+  type CacheType,
   ChatInputCommandInteraction,
   Collection,
   SlashCommandBuilder,
@@ -9,7 +9,9 @@ import path from "node:path";
 
 export type ImportedSlashCommand = {
   data: SlashCommandBuilder;
-  execute: (interaction: ChatInputCommandInteraction<CacheType>) => any;
+  execute: (
+    interaction: ChatInputCommandInteraction<CacheType>
+  ) => void | Promise<void>;
 };
 
 export const commands = new Collection<string, ImportedSlashCommand>();

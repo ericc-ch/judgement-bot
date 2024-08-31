@@ -20,43 +20,13 @@ export const execute: ImportedSlashCommand["execute"] = async (interaction) => {
   if (!interaction.inGuild())
     return interaction.reply("This command can only be used in a server");
 
-  const message = interaction.options.getString("message") ?? "";
-
-  const character = CHARACTERS.get(interaction.guildId);
-  const db = ACTIVE_DATABASES.get(interaction.guildId);
-
-  if (!character) {
-    await interaction.reply(
-      "Character isn't set. Please set it with /set command"
-    );
-    return;
-  }
-  if (!db) {
-    await interaction.reply("Character database (somehow) not found");
-    return;
-  }
-
-  const initialMessage = `${character.name} said: ${message}`;
-
   interaction.reply(`${interaction.user.displayName} said: ${message}`);
   const botMessage = await interaction.followUp(initialMessage);
+
+  interaction.followUp(`Error: ${JSON.stringify(e)}`);
 
   const newMessages: Array<LLMMessage> = [
     ...db.data.messages,
     { role: "user", content: message },
   ];
-
-  try {
-    const response = await llm.generate({
-      messages: compressPrompts(newMessages),
-      onMessage: async (response) => {
-        await botMessage.edit(response);
-      },
-    });
-    newMessages.push({ role: "assistant", content: response });
-    db.update((data) => (data.messages = newMessages));
-  } catch (e) {
-    interaction.followUp(`Error: ${JSON.stringify(e)}`);
-    console.error(e);
-  }
 };

@@ -8,6 +8,7 @@ import { compressPrompts, formatPrompt, sanitizeMentions } from "./lib/prompt";
 import { secondsToMs } from "./lib/time";
 import { fetchToken } from "./lib/token";
 import { validateMessage } from "./lib/validate";
+import { CLIENT_SECRET } from "./lib/env";
 
 const characterUrl =
   "https://janitorai.com/characters/ddd1498a-a370-4136-b138-a8cd9461fdfe_character-aqua-the-useless-goddess";
@@ -19,7 +20,7 @@ export const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
 
-client.login(import.meta.env.VITE_BOT_TOKEN);
+await client.login(CLIENT_SECRET);
 
 client.once(Events.ClientReady, (client) => {
   console.log(`${client.user.displayName} is now online!`);
@@ -33,7 +34,7 @@ client.on(Events.InteractionCreate, (interaction) => {
 
   if (!command) return;
 
-  command.execute(interaction);
+  void command.execute(interaction);
 });
 
 client.on(Events.MessageCreate, async (message) => {
