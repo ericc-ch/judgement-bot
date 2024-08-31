@@ -7,6 +7,7 @@
     "lint": "eslint . --cache"
   },
   "dependencies": {
+    "@ericc/env": "npm:@jsr/ericc__env",
     "@fortaine/fetch-event-source": "^3.0.6",
     "@types/eslint__js": "^8.42.3",
     "discord.js": "^14.15.3",

@@ -1,7 +1,6 @@
-export const env = (key: string, fallback?: string): string => {
-  const value = import.meta.env[key];
-  if (!value && !fallback)
-    throw new Error(`Environment variable ${key} is not set`);
+import { env } from "@ericc/env/bun";
 
-  return value ?? (fallback as string);
-};
+export const CLIENT_ID = env("CLIENT_ID");
+export const CLIENT_SECRET = env("CLIENT_SECRET");
+
+export const GEMINI_API_KEY = env("GEMINI_API_KEY");
