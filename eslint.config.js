@@ -1,3 +1,5 @@
 import erick from "@echristian/eslint-config";
 
-export default erick();
+export default erick({
+  ignores: ['dist/']
+});
