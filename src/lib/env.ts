@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import { env } from 'std-env'
 
 export const DISCORD_TOKEN = env.DISCORD_TOKEN
