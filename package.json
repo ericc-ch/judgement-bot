@@ -3,18 +3,20 @@
   "type": "module",
   "module": "src/main.ts",
   "scripts": {
-    "start": "jiti ./src/main.ts",
-    "lint": "eslint . --cache"
+    "build": "unbuild",
+    "dev": "tsx watch --env-file=.env ./src/main.ts",
+    "lint": "eslint . --cache",
+    "start": "node --env-file=.env ./dist/main.mjs"
   },
   "dependencies": {
     "discord.js": "^14.16.3",
-    "dotenv": "^16.4.5",
     "std-env": "^3.8.0"
   },
   "devDependencies": {
     "@echristian/eslint-config": "^0.0.2",
     "eslint": "^9.15.0",
-    "jiti": "^2.4.0",
-    "typescript": "^5.7.2"
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "unbuild": "^2.0.0"
   }
 }
