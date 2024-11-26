@@ -8,16 +8,16 @@ importers:
 
   .:
     dependencies:
+      '@echristian/env':
+        specifier: ^0.0.3
+        version: 0.0.3
       discord.js:
         specifier: ^14.16.3
         version: 14.16.3
-      std-env:
-        specifier: ^3.8.0
-        version: 3.8.0
     devDependencies:
       '@echristian/eslint-config':
-        specifier: ^0.0.2
-        version: 0.0.2(@typescript-eslint/eslint-plugin@8.16.0(@typescript-eslint/parser@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)
+        specifier: ^0.0.3
+        version: 0.0.3(@typescript-eslint/eslint-plugin@8.16.0(@typescript-eslint/parser@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)
       eslint:
         specifier: ^9.15.0
         version: 9.15.0(jiti@2.4.0)
@@ -132,8 +132,11 @@ packages:
     resolution: {integrity: sha512-PZ+vLpxGCRtmr2RMkqh8Zp+BenUaJqlS6xhgWKEZcgC/vfHLEzpHtKkB0sl3nZWpwtcKk6YWy+pU3okL2I97FA==}
     engines: {node: '>=16.11.0'}
 
-  '@echristian/eslint-config@0.0.2':
-    resolution: {integrity: sha512-UyGRcB+L9TBzTA5ONbAkr2Hwl1Q3jQMrCD9kBgaF0+fjgWaY5VNGcnMHPes5Ej2AHea1rr41+At+fiGnKZrm0Q==}
+  '@echristian/env@0.0.3':
+    resolution: {integrity: sha512-O3viRSCrZghjZjRGAw8+IMtPzY0M/nLh6UjxbqCW6k74xmKGM4bI/VHRHj6r0lwnCeFWJliJZ4QPuWZGbr01OQ==}
+
+  '@echristian/eslint-config@0.0.3':
+    resolution: {integrity: sha512-VP5zNPW8vlZYry8OYc3KrZqMQPYSKagq1n/Tx5E/rW+AlEQTEiUWAZRViqAseij3U3MduNwaYkhEzgDuu0YVTQ==}
     peerDependencies:
       eslint: '>= 9.0.0'
 
@@ -1693,9 +1696,6 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
-  std-env@3.8.0:
-    resolution: {integrity: sha512-Bc3YwwCB+OzldMxOXJIIvC6cPRWr/LxOp48CdQTOkPyk/t4JWWJbrilwBd7RJzKV8QW7tJkcgAmeuLLJugl5/w==}
-
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
@@ -1983,7 +1983,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@echristian/eslint-config@0.0.2(@typescript-eslint/eslint-plugin@8.16.0(@typescript-eslint/parser@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)':
+  '@echristian/env@0.0.3': {}
+
+  '@echristian/eslint-config@0.0.3(@typescript-eslint/eslint-plugin@8.16.0(@typescript-eslint/parser@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)':
     dependencies:
       '@eslint/js': 9.15.0
       '@stylistic/eslint-plugin': 2.11.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)
@@ -3383,8 +3385,6 @@ snapshots:
   slash@4.0.0: {}
 
   source-map-js@1.2.1: {}
-
-  std-env@3.8.0: {}
 
   strip-json-comments@3.1.1: {}
 

@@ -1,7 +1,3 @@
-import { env } from 'std-env'
+import { getEnv } from '@echristian/env'
 
-export const DISCORD_TOKEN = env.DISCORD_TOKEN
-
-if (!DISCORD_TOKEN) {
-  throw new Error('DISCORD_TOKEN is not set')
-}
+export const DISCORD_TOKEN = getEnv('DISCORD_TOKEN')
