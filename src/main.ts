@@ -21,26 +21,42 @@ client.on(Events.MessageCreate, async (message) => {
   // Ignore messages from bots
   if (message.author.bot) return
 
-  // Basic command handling
-  if (message.content.startsWith('!hello')) {
-    await message.reply('Hello! I am your Discord bot!')
-  }
+  const parsedCommand = message.content.split(' ')
 
-  // Create a thread command
-  if (message.content.startsWith('!start')) {
-    try {
-      const threadName = message.content.split(' ').slice(1).join(' ') || 'New Discussion'
-      const thread = await message.startThread({
-        autoArchiveDuration: 60,
-        name: threadName,
-        reason: 'Created a new thread via command',
-      })
-      await thread.send('Thread created! Let\'s start the discussion.')
-    }
-    catch (error) {
-      console.error('Error creating thread:', error)
-      await message.reply('Sorry, I couldn\'t create the thread. Make sure I have the necessary permissions!')
-    }
+  if (parsedCommand[0] === '!start') {
+    // Create a thread from the message
+    const thread = await message.startThread({
+      autoArchiveDuration: 60, // Thread will archive after 60 minutes of inactivity
+      name: `Session-${message.author.username}`,
+    })
+
+    // Send initial message in the thread
+    await thread.send('Thread created! Here are some examples of thread operations:')
+
+    // Example 1: Send a message to the thread
+    await thread.send('Example 1: Sending a message to the thread')
+
+    // Example 2: Add a message collector to the thread
+    const collector = thread.createMessageCollector({ time: 30000 }) // Collect messages for 30 seconds
+
+    collector.on('collect', async (msg) => {
+      if (msg.author.bot) return
+      await thread.send(`Collected a message: ${msg.content}`)
+    })
+
+    collector.on('end', async (collected) => {
+      await thread.send(`Message collection ended. Collected ${collected.size} messages.`)
+    })
+
+    // Example 4: Get thread members
+    const members = await thread.members.fetch()
+    await thread.send(`Current thread members: ${members.size}`)
+
+    // Example 5: Edit thread properties
+    await thread.edit({
+      name: `Active-Session-${message.author.username}`,
+      rateLimitPerUser: 5, // Add 5 second slowmode
+    })
   }
 })
 
