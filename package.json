@@ -9,7 +9,7 @@
     "start": "node --env-file=.env ./dist/main.mjs"
   },
   "dependencies": {
-    "@echristian/env": "^0.0.3",
+    "@echristian/env": "^0.0.4",
     "discord.js": "^14.16.3"
   },
   "devDependencies": {

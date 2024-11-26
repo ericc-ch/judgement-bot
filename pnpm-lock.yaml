@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@echristian/env':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.0.4
+        version: 0.0.4
       discord.js:
         specifier: ^14.16.3
         version: 14.16.3
@@ -132,8 +132,8 @@ packages:
     resolution: {integrity: sha512-PZ+vLpxGCRtmr2RMkqh8Zp+BenUaJqlS6xhgWKEZcgC/vfHLEzpHtKkB0sl3nZWpwtcKk6YWy+pU3okL2I97FA==}
     engines: {node: '>=16.11.0'}
 
-  '@echristian/env@0.0.3':
-    resolution: {integrity: sha512-O3viRSCrZghjZjRGAw8+IMtPzY0M/nLh6UjxbqCW6k74xmKGM4bI/VHRHj6r0lwnCeFWJliJZ4QPuWZGbr01OQ==}
+  '@echristian/env@0.0.4':
+    resolution: {integrity: sha512-OpgyJ1hoXjbJvW8vw/lUiM00BLvem4l1GjZ3rfnHGJDw9DgxVCalr3wOOc1MGU77lvT8EYddRH+4S2er1o7+HQ==}
 
   '@echristian/eslint-config@0.0.4':
     resolution: {integrity: sha512-KEWiQiPlt++7pb677Kxx2GsfZATA0qbb9x3JwJ+eQtYpGu7pXccFgAntjAL6FhNYOUI5hNGKJYqouKHRvNgWyg==}
@@ -1696,6 +1696,9 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
+  std-env@3.8.0:
+    resolution: {integrity: sha512-Bc3YwwCB+OzldMxOXJIIvC6cPRWr/LxOp48CdQTOkPyk/t4JWWJbrilwBd7RJzKV8QW7tJkcgAmeuLLJugl5/w==}
+
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
@@ -1983,7 +1986,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@echristian/env@0.0.3': {}
+  '@echristian/env@0.0.4':
+    dependencies:
+      std-env: 3.8.0
 
   '@echristian/eslint-config@0.0.4(@typescript-eslint/eslint-plugin@8.16.0(@typescript-eslint/parser@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)':
     dependencies:
@@ -3385,6 +3390,8 @@ snapshots:
   slash@4.0.0: {}
 
   source-map-js@1.2.1: {}
+
+  std-env@3.8.0: {}
 
   strip-json-comments@3.1.1: {}
 
