@@ -8,6 +8,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
   ],
 })
 
@@ -31,7 +32,9 @@ client.on(Events.MessageCreate, async (message) => {
     })
 
     // Send initial message in the thread
-    await thread.send('Thread created! Here are some examples of thread operations:')
+    await thread.send(
+      'Thread created! Here are some examples of thread operations:',
+    )
 
     // Example 1: Send a message to the thread
     await thread.send('Example 1: Sending a message to the thread')
@@ -45,7 +48,9 @@ client.on(Events.MessageCreate, async (message) => {
     })
 
     collector.on('end', async (collected) => {
-      await thread.send(`Message collection ended. Collected ${collected.size} messages.`)
+      await thread.send(
+        `Message collection ended. Collected ${collected.size} messages. ${JSON.stringify(collected.toJSON()).slice(0, 100)}`,
+      )
     })
 
     // Example 4: Get thread members
