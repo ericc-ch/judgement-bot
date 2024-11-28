@@ -2,7 +2,6 @@ import { Client, Events, GatewayIntentBits } from 'discord.js'
 
 import { DISCORD_TOKEN } from './lib/env'
 
-// Create a new client instance
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -12,58 +11,49 @@ const client = new Client({
   ],
 })
 
-// When the client is ready, run this code (only once)
+await client.login(DISCORD_TOKEN)
+
 client.once(Events.ClientReady, (readyClient) => {
-  console.log(`Ready! Logged in as ${readyClient.user.tag}`)
+  console.log(`${readyClient.user.tag} is ready!`)
 })
 
-// Handle messages
 client.on(Events.MessageCreate, async (message) => {
-  // Ignore messages from bots
   if (message.author.bot) return
+  if (message.channel.isThread()) return
 
   const parsedCommand = message.content.split(' ')
 
   if (parsedCommand[0] === '!start') {
-    // Create a thread from the message
+    const scenario = parsedCommand.slice(1).join(' ')
+
     const thread = await message.startThread({
-      autoArchiveDuration: 60, // Thread will archive after 60 minutes of inactivity
-      name: `Session-${message.author.username}`,
+      name: `Scenario: ${scenario}`,
+      rateLimitPerUser: 15,
     })
 
-    // Send initial message in the thread
-    await thread.send(
-      'Thread created! Here are some examples of thread operations:',
-    )
+    let timeLimit = 60
+    const timerMessage = await thread.send(`${timeLimit} seconds left`)
 
-    // Example 1: Send a message to the thread
-    await thread.send('Example 1: Sending a message to the thread')
+    const timer = setInterval(async () => {
+      timeLimit = timeLimit - 1
+      await timerMessage.edit(`${timeLimit} seconds left`)
+      if (timeLimit <= 0) {
+        clearInterval(timer)
+        await thread.send('Time is up!')
+      }
+    }, 1000)
 
-    // Example 2: Add a message collector to the thread
-    const collector = thread.createMessageCollector({ time: 30000 }) // Collect messages for 30 seconds
-
-    collector.on('collect', async (msg) => {
-      if (msg.author.bot) return
-      await thread.send(`Collected a message: ${msg.content}`)
-    })
+    const collector = thread.createMessageCollector({ time: 60_000 }) // Collect messages for 30 seconds
 
     collector.on('end', async (collected) => {
+      const messages = collected.map(message => ({
+        author: message.author.username,
+        content: message.content,
+      }))
+
       await thread.send(
-        `Message collection ended. Collected ${collected.size} messages. ${JSON.stringify(collected.toJSON()).slice(0, 100)}`,
+        `Message collection ended. ${JSON.stringify(messages)}`,
       )
-    })
-
-    // Example 4: Get thread members
-    const members = await thread.members.fetch()
-    await thread.send(`Current thread members: ${members.size}`)
-
-    // Example 5: Edit thread properties
-    await thread.edit({
-      name: `Active-Session-${message.author.username}`,
-      rateLimitPerUser: 5, // Add 5 second slowmode
     })
   }
 })
-
-// Log in to Discord with your client's token
-await client.login(DISCORD_TOKEN)
