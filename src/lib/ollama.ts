@@ -1,14 +1,14 @@
-import { Ollama } from 'ollama'
+import { Ollama } from "ollama";
 
 interface OllamaWithModelOptions {
-  model: string
+  model: string;
 }
 
 export class OllamaWithModel extends Ollama {
-  model: string
+  model: string;
 
   constructor({ model }: OllamaWithModelOptions) {
-    super()
-    this.model = model
+    super();
+    this.model = model;
   }
 }
