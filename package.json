@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@echristian/env": "^0.0.4",
-    "discord.js": "^14.16.3"
+    "discord.js": "^14.16.3",
+    "ofetch": "^1.4.1",
+    "ollama": "^0.5.10"
   },
   "devDependencies": {
     "@echristian/eslint-config": "^0.0.4",
