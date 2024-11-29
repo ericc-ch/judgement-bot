@@ -9,6 +9,8 @@
     "start": "node --env-file=.env ./dist/main.mjs"
   },
   "dependencies": {
+    "@discordjs/voice": "^0.18.0",
+    "@echristian/edge-tts": "^0.0.8",
     "@echristian/env": "^0.0.4",
     "discord.js": "^14.16.3",
     "lodash-es": "^4.17.21",
