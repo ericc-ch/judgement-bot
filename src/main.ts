@@ -4,6 +4,7 @@ import {
   GatewayIntentBits,
   ThreadAutoArchiveDuration,
 } from "discord.js";
+import { throttle } from "lodash-es";
 
 import { DISCORD_TOKEN } from "./lib/env";
 import { generateOutcome } from "./services/outcome/outcome";
@@ -38,7 +39,7 @@ client.on(Events.MessageCreate, async (message) => {
       autoArchiveDuration: ThreadAutoArchiveDuration.OneHour,
     });
 
-    let timeLimit = 60;
+    let timeLimit = 30;
     const timerMessage = await thread.send(`${timeLimit} seconds left`);
 
     const timer = setInterval(async () => {
@@ -46,7 +47,6 @@ client.on(Events.MessageCreate, async (message) => {
       await timerMessage.edit(`${timeLimit} seconds left`);
       if (timeLimit <= 0) {
         clearInterval(timer);
-        await thread.send("Time is up!");
       }
     }, 1000);
 
@@ -71,9 +71,6 @@ client.on(Events.MessageCreate, async (message) => {
           return prev;
         }, []);
 
-      console.log(scenario);
-      console.log(input);
-
       const response = await generateOutcome({
         scenario,
         input,
@@ -83,9 +80,14 @@ client.on(Events.MessageCreate, async (message) => {
 
       const responseMessage = await thread.send(fullMessage);
 
+      const editMessage = throttle(
+        (message: string) => responseMessage.edit(message),
+        1000,
+      );
+
       for await (const chunk of response) {
         fullMessage += chunk.message.content;
-        await responseMessage.edit(fullMessage);
+        await editMessage(fullMessage);
       }
     });
   }
