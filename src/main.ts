@@ -1,6 +1,12 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import {
+  Client,
+  Events,
+  GatewayIntentBits,
+  ThreadAutoArchiveDuration,
+} from "discord.js";
 
 import { DISCORD_TOKEN } from "./lib/env";
+import { generateOutcome } from "./services/outcome/outcome";
 
 const client = new Client({
   intents: [
@@ -29,6 +35,7 @@ client.on(Events.MessageCreate, async (message) => {
     const thread = await message.startThread({
       name: `Scenario: ${scenario}`,
       rateLimitPerUser: 15,
+      autoArchiveDuration: ThreadAutoArchiveDuration.OneHour,
     });
 
     let timeLimit = 60;
@@ -43,17 +50,43 @@ client.on(Events.MessageCreate, async (message) => {
       }
     }, 1000);
 
-    const collector = thread.createMessageCollector({ time: 60_000 }); // Collect messages for 30 seconds
+    const collector = thread.createMessageCollector({ time: 30_000 }); // Collect messages for 30 seconds
 
     collector.on("end", async (collected) => {
-      const messages = collected.map((message) => ({
-        author: message.author.username,
-        content: message.content,
-      }));
+      const input = collected
+        .filter((message) => !message.author.bot)
+        .map((message) => ({
+          player: message.author.username,
+          action: message.content,
+        }))
+        .reduce<Array<{ player: string; action: string }>>((prev, curr) => {
+          const playerIndex = prev.findIndex((p) => p.player === curr.player);
 
-      await thread.send(
-        `Message collection ended. ${JSON.stringify(messages)}`,
-      );
+          if (playerIndex !== -1) {
+            prev[playerIndex].action += curr.action;
+          } else {
+            prev.push(curr);
+          }
+
+          return prev;
+        }, []);
+
+      console.log(scenario);
+      console.log(input);
+
+      const response = await generateOutcome({
+        scenario,
+        input,
+      });
+
+      let fullMessage = "The outcome of the game is:\n\n";
+
+      const responseMessage = await thread.send(fullMessage);
+
+      for await (const chunk of response) {
+        fullMessage += chunk.message.content;
+        await responseMessage.edit(fullMessage);
+      }
     });
   }
 });

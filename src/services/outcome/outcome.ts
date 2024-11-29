@@ -76,8 +76,8 @@ export interface GenerateOutcomeOptions {
   }>;
 }
 
-export async function generateOutcome(options: GenerateOutcomeOptions) {
-  const response = await outcome.chat({
+export function generateOutcome(options: GenerateOutcomeOptions) {
+  return outcome.chat({
     messages: [
       {
         role: "system",
@@ -108,14 +108,8 @@ export async function generateOutcome(options: GenerateOutcomeOptions) {
         content: mainPrompt(options),
       },
     ],
+
     model: outcome.model,
     stream: true,
   });
-
-  let fullMessage = "";
-  for await (const chunk of response) {
-    console.log(chunk.message.content);
-    fullMessage += chunk.message.content;
-  }
-  console.log("fullMessage", fullMessage);
 }
